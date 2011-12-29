@@ -14,13 +14,23 @@ my $builder = MyBuilder->new
    dist_version_from   => 'lib/Lingua/Identify/CLD.pm',
    build_requires      => {
                            'Config::AutoConf'     => '0.16',
+                           'ExtUtils::CBuilder'   => '0.27',
                            'ExtUtils::LibBuilder' => '0.04',
                            'Test::More'           => 0,
                           },
    requires            => {
                            'perl' => 5.008,
                           },
-   add_to_cleanup      => [ 'Lingua-Identify-CLD-*' ],
+   add_to_cleanup      => [
+                           'cld-src/*.dylib',
+                           'cld-src/*.so',
+                           'cld-src/*.dll',
+                           'cld-src/*.o',
+                           'cld-src/*/*.o',
+                           'cld-src/*/*/*.o',
+                           'cld-src/*/*/*/*.o',
+                           'Lingua-Identify-CLD-*'
+                          ],
    create_makefile_pl  => 'traditional',
   );
 
