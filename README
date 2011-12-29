@@ -1,15 +1,14 @@
 Lingua-Identify-CLD
 
-The README is used to introduce the module and provide instructions on
-how to install the module, any machine dependencies it may have (for
-example C compilers and installed libraries) and any other information
-that should be provided before the module is installed.
+These are Perl bindings to CLD, the Compact Language Detection library
+from Google/Chrome.
 
-A README file is required for CPAN modules since CPAN extracts the README
-file from a module distribution so that people browsing the archive
-can use it to get an idea of the module's uses. It is usually a good idea
-to provide version information here so that people can decide whether
-fixes for the module are worth downloading.
+While CLD is not available as a standard package with a standard build
+system, I am shiping the code in the tarball. For details on the
+library check
+  http://code.google.com/p/chromium-compact-language-detector/
+
+Note that you will require a C compiler to build the library and the bindings.
 
 
 INSTALLATION
@@ -21,6 +20,7 @@ To install this module, run the following commands:
 	./Build test
 	./Build install
 
+
 SUPPORT AND DOCUMENTATION
 
 After installing, you can find documentation for this module with the
@@ -30,8 +30,8 @@ perldoc command.
 
 You can also look for information at:
 
-    RT, CPAN's request tracker (report bugs here)
-        http://rt.cpan.org/NoAuth/Bugs.html?Dist=Lingua-Identify-CLD
+    Git repository and ticket tracker (report bugs here)
+        http://github.com/ambs/Lingua-Identify-CLD
 
     AnnoCPAN, Annotated CPAN documentation
         http://annocpan.org/dist/Lingua-Identify-CLD
@@ -45,7 +45,7 @@ You can also look for information at:
 
 LICENSE AND COPYRIGHT
 
-Copyright (C) 2011 Alberto Simoes
+Copyright (C) 2011-2012 Alberto Simões
 
 This program is distributed under the (Revised) BSD License:
 L<http://www.opensource.org/licenses/bsd-license.php>
