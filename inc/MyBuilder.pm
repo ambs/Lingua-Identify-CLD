@@ -5,11 +5,38 @@ use strict;
 use Config;
 use Carp;
 use Config::AutoConf;
-#use ExtUtils::LibBuilder;
+
+use ExtUtils::LibBuilder;
+use File::Spec::Functions qw.catdir catfile.;
+use File::Path qw.mkpath.;
+
+my @SOURCES = map { "cld-src/$_" }
+  (
+   qw{encodings/compact_lang_det/cldutil.cc
+      encodings/compact_lang_det/cldutil_dbg_empty.cc
+      encodings/compact_lang_det/compact_lang_det.cc
+      encodings/compact_lang_det/compact_lang_det_impl.cc
+      encodings/compact_lang_det/ext_lang_enc.cc
+      encodings/compact_lang_det/getonescriptspan.cc
+      encodings/compact_lang_det/letterscript_enum.cc
+      encodings/compact_lang_det/tote.cc
+      encodings/compact_lang_det/generated/cld_generated_score_quadchrome_0406.cc
+      encodings/compact_lang_det/generated/compact_lang_det_generated_cjkbis_0.cc
+      encodings/compact_lang_det/generated/compact_lang_det_generated_ctjkvz.cc
+      encodings/compact_lang_det/generated/compact_lang_det_generated_deltaoctachrome.cc
+      encodings/compact_lang_det/generated/compact_lang_det_generated_quadschrome.cc
+      encodings/compact_lang_det/win/cld_htmlutils_windows.cc
+      encodings/compact_lang_det/win/cld_unilib_windows.cc
+      encodings/compact_lang_det/win/cld_utf8statetable.cc
+      encodings/compact_lang_det/win/cld_utf8utils_windows.cc
+      encodings/internal/encodings.cc
+      languages/internal/languages.cc}
+  );
+
+
 #use ExtUtils::ParseXS;
 #use ExtUtils::Mkbootstrap;
-#use File::Spec::Functions qw.catdir catfile.;
-#use File::Path qw.mkpath.;
+
 
 # my $pedantic = $ENV{AMBS_PEDANTIC} || 0;
 
@@ -68,8 +95,8 @@ use Config::AutoConf;
 #     print STDERR "Note that dictionary installation should be performed by a superuser account.\n";
 # }
 
-# sub ACTION_code {
-#     my $self = shift;
+sub ACTION_code {
+    my $self = shift;
 
 #     for my $path (catdir("blib","bindoc"),
 #                   catdir("blib","pcfile"),
@@ -79,8 +106,8 @@ use Config::AutoConf;
 #         mkpath $path unless -d $path;
 #     }
 
-#     my $libbuilder = ExtUtils::LibBuilder->new;
-#     $self->notes(libbuilder => $libbuilder);
+    my $libbuilder = ExtUtils::LibBuilder->new;
+    $self->notes(libbuilder => $libbuilder);
 
 #     my $x = $self->notes('libdir');
 #     $x =~ s/\\/\\\\/g;
@@ -89,16 +116,20 @@ use Config::AutoConf;
 #                  LIBDIR  => $x,
 #                 );
 
+    $self->notes(CFLAGS  => '-fPIC -I. -O2 -DCLD_WINDOWS'); # XXX fixme for windows
+    $self->notes(LDFLAGS => '-L.');
+
+    $self->dispatch("create_objects");
+
 #     $self->dispatch("create_manpages");
 #     $self->dispatch("create_yacc");
-#     $self->dispatch("create_objects");
-#     $self->dispatch("create_library");
+    $self->dispatch("create_library");
 #     $self->dispatch("create_binaries");
 
 #     # $self->dispatch("compile_xscode");
 
-#     $self->SUPER::ACTION_code;
-# }
+    $self->SUPER::ACTION_code;
+}
 
 # sub ACTION_create_yacc {
 #     my $self = shift;
@@ -142,25 +173,23 @@ use Config::AutoConf;
 #     }
 # }
 
-# sub ACTION_create_objects {
-#     my $self = shift;
-#     my $cbuilder = $self->cbuilder;
+sub ACTION_create_objects {
+    my $self = shift;
+    my $cbuilder = $self->cbuilder;
 
-#     my $c_files = $self->rscan_dir('src', qr/\.c$/);
+    my $extra_compiler_flags = $self->notes('CFLAGS');
 
-#     my $extra_compiler_flags = $self->notes('ccurses');
-#     $extra_compiler_flags = "-Wall -Werror $extra_compiler_flags" if $pedantic;
-
-#     for my $file (@$c_files) {
-#         my $object = $file;
-#         $object =~ s/\.c/.o/;
-#         next if $self->up_to_date($file, $object);
-#         $cbuilder->compile(object_file  => $object,
-#                            source       => $file,
-#                            include_dirs => ["src"],
-#                            extra_compiler_flags => $extra_compiler_flags);
-#     }
-# }
+    for my $file (@SOURCES) {
+        my $object = $file;
+        $object =~ s/\.cc/.o/;
+        next if $self->up_to_date($file, $object);
+        $cbuilder->compile(object_file  => $object,
+                           source       => $file,
+                           include_dirs => ["cld-src"],
+                           extra_compiler_flags => $extra_compiler_flags,
+                           'C++' => 1);
+    }
+}
 
 
 # sub ACTION_create_binaries {
@@ -200,41 +229,38 @@ use Config::AutoConf;
 #     }
 # }
 
-# sub ACTION_create_library {
-#     my $self = shift;
-#     my $cbuilder = $self->cbuilder;
+sub ACTION_create_library {
+    my $self = shift;
+    my $cbuilder = $self->cbuilder;
 
-#     my $libbuilder = $self->notes('libbuilder');
-#     my $LIBEXT = $libbuilder->{libext};
+    my $libbuilder = $self->notes('libbuilder');
+    my $LIBEXT = $libbuilder->{libext};
 
-#     my @files = qw!correct defmt dump gclass good hash jjflags
-#                    jslib jspell lookup makedent sc-corr term
-#                    tgood tree vars xgets y.tab!;
+    my $o_files = $self->rscan_dir('cld-src', qr/\.o$/);
 
-#     my @objects = map { catfile("src","$_.o") } @files;
 
-#     my $libpath = $self->notes('libdir');
-#     $libpath = catfile($libpath, "libjspell$LIBEXT");
-#     my $libfile = catfile("src","libjspell$LIBEXT");
+    my $libpath = $self->notes('libdir');
+    $libpath = catfile($libpath, "libcld$LIBEXT");
+    my $libfile = catfile("cld-src","libcld$LIBEXT");
 
-#     my $extralinkerflags = $self->notes('lcurses').$self->notes('ccurses');
-#     $extralinkerflags.=" -install_name $libpath" if $^O =~ /darwin/;
+    my $extralinkerflags = "";
+    $extralinkerflags.=" -install_name $libpath" if $^O =~ /darwin/;
 
-#     if (!$self->up_to_date(\@objects, $libfile)) {
-#         $libbuilder->link(module_name => 'libjspell',
-#                           extra_linker_flags => $extralinkerflags,
-#                           objects => \@objects,
-#                           lib_file => $libfile,
-#                          );
-#     }
+    if (!$self->up_to_date($o_files, $libfile)) {
+        $libbuilder->link(module_name => 'libcld',
+                          extra_linker_flags => $extralinkerflags,
+                          objects => $o_files,
+                          lib_file => $libfile,
+                         );
+    }
 
-#     my $libdir = catdir($self->blib, 'usrlib');
-#     mkpath( $libdir, 0, 0777 ) unless -d $libdir;
+    my $libdir = catdir($self->blib, 'usrlib');
+    mkpath( $libdir, 0, 0777 ) unless -d $libdir;
 
-#     $self->copy_if_modified( from   => $libfile,
-#                              to_dir => $libdir,
-#                              flatten => 1 );
-# }
+    $self->copy_if_modified( from   => $libfile,
+                             to_dir => $libdir,
+                             flatten => 1 );
+}
 
 # sub ACTION_test {
 #     my $self = shift;
