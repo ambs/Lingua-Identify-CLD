@@ -60,6 +60,25 @@ int main(int argc, char **argv) {
 
     const char* src = kTeststr_en;
     Language lang;
+
+    // 1. 0
+    // 2. const char * (text to analyse)
+    // 3. length (strlen the stuff)
+    // 4. true for plain text
+    // 5. true (allow extended languages)
+    // 6. false (pick summary langauge)
+    // 7. false (remove weak matvhes)
+    // 8. tld_hint = NULL
+    // 9. encoding_hint = UNKNOWN_ENCODING (int)
+    // 10. language_hint = UNKNOWN_LANGUAGE (Language)
+    // 11. language3 = Language language3[3] (??
+    // 12. percent3 = int[3]
+    // 13. normalized_score3 = double[3]
+    // 14. int pointer (text_bytes)
+    // 15. bool pointer (is_reliable)
+
+    // returns a Language
+
     lang = CompactLangDet::DetectLanguage(0,
                                           src, strlen(src),
                                           is_plain_text,
