@@ -5,11 +5,11 @@ use strict;
 use Config;
 use Carp;
 use Config::AutoConf;
-use ExtUtils::LibBuilder;
-use ExtUtils::ParseXS;
-use ExtUtils::Mkbootstrap;
-use File::Spec::Functions qw.catdir catfile.;
-use File::Path qw.mkpath.;
+#use ExtUtils::LibBuilder;
+#use ExtUtils::ParseXS;
+#use ExtUtils::Mkbootstrap;
+#use File::Spec::Functions qw.catdir catfile.;
+#use File::Path qw.mkpath.;
 
 # my $pedantic = $ENV{AMBS_PEDANTIC} || 0;
 
