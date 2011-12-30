@@ -308,24 +308,23 @@ sub ACTION_create_library {
                              flatten => 1 );
 }
 
-# sub ACTION_test {
-#     my $self = shift;
+sub ACTION_test {
+    my $self = shift;
 
-#     if ($^O =~ /mswin32/i) {
-#         $ENV{PATH} = catdir($self->blib,"usrlib").";$ENV{PATH}";
-#     } elsif ($^O =~ /darwin/i) {
-#         $ENV{DYLD_LIBRARY_PATH} = catdir($self->blib,"usrlib");
-#     }
-#     elsif ($^O =~ /(?:linux|bsd|sun|sol|dragonfly|hpux|irix)/i) {
-#         $ENV{LD_LIBRARY_PATH} = catdir($self->blib,"usrlib");
-#     }
-#     elsif ($^O =~ /aix/i) {
-#         my $oldlibpath = $ENV{LIBPATH} || '/lib:/usr/lib';
-#         $ENV{LIBPATH} = catdir($self->blib,"usrlib").":$oldlibpath";
-#     }
-
-#     $self->SUPER::ACTION_test
-# }
+    if ($^O =~ /mswin32/i) {
+        $ENV{PATH} = catdir($self->blib,"usrlib").";$ENV{PATH}";
+    } elsif ($^O =~ /darwin/i) {
+        $ENV{DYLD_LIBRARY_PATH} = catdir($self->blib,"usrlib");
+    }
+    elsif ($^O =~ /(?:linux|bsd|sun|sol|dragonfly|hpux|irix)/i) {
+        $ENV{LD_LIBRARY_PATH} = catdir($self->blib,"usrlib");
+     }
+    elsif ($^O =~ /aix/i) {
+        my $oldlibpath = $ENV{LIBPATH} || '/lib:/usr/lib';
+        $ENV{LIBPATH} = catdir($self->blib,"usrlib").":$oldlibpath";
+    }
+    $self->SUPER::ACTION_test
+}
 
 
 # sub _interpolate {

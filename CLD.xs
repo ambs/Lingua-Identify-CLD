@@ -10,6 +10,8 @@ extern "C" {
 }
 #endif
 
+#include <stdio.h>
+
 #include "ppport.h"
 
 #include "encodings/compact_lang_det/compact_lang_det.h"
@@ -18,4 +20,11 @@ extern "C" {
 #include "encodings/proto/encodings.pb.h"
 
 MODULE = Lingua::Identify::CLD		PACKAGE = Lingua::Identify::CLD
+
+void
+identify(src)
+   const char* src
+  CODE:
+    fprintf(stderr, "Hello %s\n\n\n\n", src);
+
 

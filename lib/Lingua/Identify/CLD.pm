@@ -4,6 +4,7 @@ use 5.006;
 use strict;
 use warnings;
 
+
 =head1 NAME
 
 Lingua::Identify::CLD - The great new Lingua::Identify::CLD!
@@ -16,6 +17,8 @@ Version 0.01
 
 our $VERSION = '0.01';
 
+require XSLoader;
+XSLoader::load('Lingua::Identify::CLD', $VERSION);
 
 =head1 SYNOPSIS
 

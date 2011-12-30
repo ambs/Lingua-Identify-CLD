@@ -7,3 +7,5 @@ BEGIN {
 }
 
 diag( "Testing Lingua::Identify::CLD $Lingua::Identify::CLD::VERSION, Perl $], $^X" );
+
+Lingua::Identify::CLD::identify("OLA");
