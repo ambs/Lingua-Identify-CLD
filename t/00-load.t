@@ -2,7 +2,7 @@
 
 use utf8;
 
-use Test::More tests => 1;
+use Test::More tests => 3;
 
 BEGIN {
     use_ok( 'Lingua::Identify::CLD' ) || print "Bail out!\n";
@@ -48,5 +48,5 @@ EOI
 
 diag( "Testing Lingua::Identify::CLD $Lingua::Identify::CLD::VERSION, Perl $], $^X" );
 
-Lingua::Identify::CLD::identify($eng);
-Lingua::Identify::CLD::identify($hindi);
+is(Lingua::Identify::CLD::identify($eng), "ENGLISH", "English identification");
+is(Lingua::Identify::CLD::identify($hindi), "HINDI", "Hindi identification");

@@ -18,6 +18,10 @@ my $builder = MyBuilder->new
                            'ExtUtils::LibBuilder' => '0.04',
                            'Test::More'           => 0,
                           },
+   configure_requires  => {
+                           'Config::AutoConf'     => '0.16',
+                           'Module::Build'        => '0.38',
+                          },
    requires            => {
                            'perl' => 5.008,
                           },
@@ -32,7 +36,6 @@ my $builder = MyBuilder->new
                            'cld-src/*/*/*/*.o',
                            'Lingua-Identify-CLD-*'
                           ],
-   create_makefile_pl  => 'traditional',
   );
 
 

@@ -7,50 +7,34 @@ use warnings;
 
 =head1 NAME
 
-Lingua::Identify::CLD - The great new Lingua::Identify::CLD!
+Lingua::Identify::CLD - Interface to Chrome language detection library.
 
 =head1 VERSION
 
-Version 0.01
+Version 0.01_01
 
 =cut
 
-our $VERSION = '0.01';
+our $VERSION = '0.01_01';
 
 require XSLoader;
 XSLoader::load('Lingua::Identify::CLD', $VERSION);
 
 =head1 SYNOPSIS
 
-Quick summary of what the module does.
-
-Perhaps a little code snippet.
-
     use Lingua::Identify::CLD;
 
-    my $foo = Lingua::Identify::CLD->new();
-    ...
+    // NOTE: THIS INTERFACE IS TEMPORARY, FOR TESTING PURPOSES
 
-=head1 EXPORT
+    my $lang = Lingua::Identify::CLD::identify("Text");
 
-A list of functions that can be exported.  You can delete this section
-if you don't export anything, such as for a purely object-oriented module.
+=head1 SUBROUTINES
 
-=head1 SUBROUTINES/METHODS
+=head2 identify
 
-=head2 function1
+Receives a string, returns a language name.
 
 =cut
-
-sub function1 {
-}
-
-=head2 function2
-
-=cut
-
-sub function2 {
-}
 
 =head1 AUTHOR
 
@@ -58,12 +42,10 @@ Alberto Simoes, C<< <ambs at cpan.org> >>
 
 =head1 BUGS
 
-Please report any bugs or feature requests to C<bug-lingua-identify-cld at rt.cpan.org>, or through
-the web interface at L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Lingua-Identify-CLD>.  I will be notified, and then you'll
-automatically be notified of progress on your bug as I make changes.
-
-
-
+Please report any bugs or feature requests to
+L<http://github.com/ambs/Lingua-Identify-CLD>.  I will be notified,
+and then you'll automatically be notified of progress on your bug as I
+make changes.
 
 =head1 SUPPORT
 
@@ -76,9 +58,9 @@ You can also look for information at:
 
 =over 4
 
-=item * RT: CPAN's request tracker (report bugs here)
+=item * Git repository and ticket tracker
 
-L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=Lingua-Identify-CLD>
+L<http://github.com/ambs/Lingua-Identify-CLD>
 
 =item * AnnoCPAN: Annotated CPAN documentation
 
@@ -97,6 +79,9 @@ L<http://search.cpan.org/dist/Lingua-Identify-CLD/>
 
 =head1 ACKNOWLEDGEMENTS
 
+Chrome team for making the code available.
+
+Jean Véronis for pushing me to do this.
 
 =head1 LICENSE AND COPYRIGHT
 

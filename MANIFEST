@@ -1,3 +1,4 @@
+Build.PL
 Changes
 cld-src/base/basictypes.h
 cld-src/base/build_config.h
@@ -94,11 +95,18 @@ cld-src/setup.py
 cld-src/test.py
 cld-src/testData.py
 cld-src/TODO
+CLD.xs
+inc/MyBuilder.pm
 lib/Lingua/Identify/CLD.pm
 MANIFEST			This list of files
 MANIFEST.SKIP
+META.yml
+perlobject.map
+ppport.h
 README
 t/00-load.t
 t/manifest.t
 t/pod-coverage.t
 t/pod.t
+typemap
+META.json
