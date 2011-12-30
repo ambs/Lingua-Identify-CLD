@@ -151,10 +151,11 @@ sub ACTION_compile_xscode {
     }
 
     $self->add_to_cleanup($ofile); ## FIXME
-    if (!$self->up_to_date($cfile, $ofile)) {
-        my $extra_compiler_flags = "";
-        $Config{ccflags} =~ /(-arch \S+(?: -arch \S+)*)/ and $extra_compiler_flags .= $1;
 
+    my $extra_compiler_flags = $self->notes('CFLAGS');
+    $Config{ccflags} =~ /(-arch \S+(?: -arch \S+)*)/ and $extra_compiler_flags .= " $1";
+
+    if (!$self->up_to_date($cfile, $ofile)) {
         $cbuilder->compile( source               => $cfile,
                             include_dirs         => [ catdir("cld-src") ],
                             'C++'                => 1,
@@ -180,7 +181,7 @@ sub ACTION_compile_xscode {
         my $btparselibdir = $self->install_path('usrlib');
         $cbuilder->link(
                         module_name => 'Lingua::Identify::CLD',
-                        extra_linker_flags => "-Lcld-src -lcld ",
+                        extra_linker_flags => "-Lcld-src -lcld -lstdc++",
                         objects     => $objects,
                         lib_file    => $lib_file,
                        );
