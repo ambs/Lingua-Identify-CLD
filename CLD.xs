@@ -1,3 +1,5 @@
+/* -*- c -*- */
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -11,6 +13,7 @@ extern "C" {
 #endif
 
 #include <stdio.h>
+#include <string.h>
 
 #include "ppport.h"
 
@@ -25,6 +28,53 @@ void
 identify(src)
    const char* src
   CODE:
-    fprintf(stderr, "Hello %s\n\n\n\n", src);
+    int src_length = strlen(src);
+    bool is_plain_text = true; /* make this an option */
+    bool allow_extended_languages = true;
+    bool pick_summary_language = false;
+    bool remove_weak_matches = false;
+    const char* tld_hint = NULL;
+    int encoding_hint = UNKNOWN_ENCODING;
+    Language language_hint = UNKNOWN_LANGUAGE;
+
+    double normalized_score3[3];
+    Language language3[3];
+    int percent3[3];
+
+    int text_bytes;
+    bool is_reliable;
+    
+    fprintf(stderr, "Text is >%s<\n", src);
+    fprintf(stderr, "Text length is >%d<\n", src_length);
+    fprintf(stderr, "is_plain_text is >%d<\n", is_plain_text);
+    fprintf(stderr, "allow_extended_languages is >%d<\n", allow_extended_languages);
+    fprintf(stderr, "pick_summary_language is >%d<\n", pick_summary_language);
+    fprintf(stderr, "remove_weak_matches is >%d<\n", remove_weak_matches);
+    if (!tld_hint) 
+       fprintf(stderr, "tld_hint is null\n");
+    else
+       fprintf(stderr, "tld_hint is >%s<\n", tld_hint);
+    fprintf(stderr, "encoding_hint is >%d<\n", encoding_hint);
+    fprintf(stderr, "language_hint is >%d<\n", language_hint);
+
+    Language lang = CompactLangDet::DetectLanguage(0,
+                                          src,
+                                          src_length,
+                                          is_plain_text,
+                                          allow_extended_languages,
+                                          pick_summary_language,
+                                          remove_weak_matches,
+                                          tld_hint,
+                                          encoding_hint,
+                                          language_hint,
+                                          language3,
+                                          percent3,
+                                          normalized_score3,
+                                          &text_bytes,
+                                          &is_reliable);
+
+    fprintf(stderr, "identified as >%d<\n", lang);
+    fprintf(stderr, "\n\n\n");
+
 
 
