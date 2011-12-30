@@ -22,6 +22,7 @@ my $builder = MyBuilder->new
                            'perl' => 5.008,
                           },
    add_to_cleanup      => [
+                           '*.o',
                            'cld-src/*.dylib',
                            'cld-src/*.so',
                            'cld-src/*.dll',

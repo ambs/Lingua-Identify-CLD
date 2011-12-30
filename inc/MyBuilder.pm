@@ -34,8 +34,8 @@ my @SOURCES = map { "cld-src/$_" }
   );
 
 
-#use ExtUtils::ParseXS;
-#use ExtUtils::Mkbootstrap;
+use ExtUtils::ParseXS;
+use ExtUtils::Mkbootstrap;
 
 
 # my $pedantic = $ENV{AMBS_PEDANTIC} || 0;
@@ -122,28 +122,71 @@ sub ACTION_code {
     $self->dispatch("create_objects");
 
 #     $self->dispatch("create_manpages");
-#     $self->dispatch("create_yacc");
     $self->dispatch("create_library");
-#     $self->dispatch("create_binaries");
 
-#     # $self->dispatch("compile_xscode");
+    $self->dispatch("compile_xscode");
 
     $self->SUPER::ACTION_code;
 }
 
-# sub ACTION_create_yacc {
-#     my $self = shift;
 
-#     my $ytabc  = catfile('src','y.tab.c');
-#     my $parsey = catfile('src','parse.y');
+sub ACTION_compile_xscode {
+    my $self = shift;
+    my $cbuilder = $self->cbuilder;
 
-#     return if $self->up_to_date($parsey, $ytabc);
+    my $archdir = catdir( $self->blib, 'arch', 'auto', 'Lingua', 'Identify', 'CLD');
+    mkpath( $archdir, 0, 0777 ) unless -d $archdir;
 
-#     my $yacc = Config::AutoConf->check_prog("yacc","bison");
-#     if ($yacc) {
-#         `$yacc -o $ytabc $parsey`;
-#     }
-# }
+    print STDERR "\n** Preparing XS code\n";
+    my $cfile = catfile("CLD.cc");
+    my $xsfile= catfile("CLD.xs");
+    my $ofile = catfile("CLD.o");
+
+    $self->add_to_cleanup($cfile); ## FIXME
+    if (!$self->up_to_date($xsfile, $cfile)) {
+        ExtUtils::ParseXS::process_file( filename   => $xsfile,
+                                         'C++'      => 1,
+                                         prototypes => 0,
+                                         output     => $cfile);
+    }
+
+    $self->add_to_cleanup($ofile); ## FIXME
+    if (!$self->up_to_date($cfile, $ofile)) {
+        my $extra_compiler_flags = "";
+        $Config{ccflags} =~ /(-arch \S+(?: -arch \S+)*)/ and $extra_compiler_flags .= $1;
+
+        $cbuilder->compile( source               => $cfile,
+                            include_dirs         => [ catdir("cld-src") ],
+                            'C++'                => 1,
+                            extra_compiler_flags => $extra_compiler_flags,
+                            object_file          => $ofile);
+    }
+
+    # Create .bs bootstrap file, needed by Dynaloader.
+    my $bs_file = catfile( $archdir, "CLD.bs" );
+    if ( !$self->up_to_date( $ofile, $bs_file ) ) {
+        ExtUtils::Mkbootstrap::Mkbootstrap($bs_file);
+        if ( !-f $bs_file ) {
+            # Create file in case Mkbootstrap didn't do anything.
+            open( my $fh, '>', $bs_file ) or confess "Can't open $bs_file: $!";
+        }
+        utime( (time) x 2, $bs_file );    # touch
+    }
+
+    my $objects = [ $ofile ];
+    # .o => .(a|bundle)
+    my $lib_file = catfile( $archdir, "CLD.$Config{dlext}" );
+    if ( !$self->up_to_date( [ @$objects ], $lib_file ) ) {
+        my $btparselibdir = $self->install_path('usrlib');
+        $cbuilder->link(
+                        module_name => 'Lingua::Identify::CLD',
+                        extra_linker_flags => "-Lcld-src -lcld ",
+                        objects     => $objects,
+                        lib_file    => $lib_file,
+                       );
+    }
+}
+
 
 # sub ACTION_create_manpages {
 #     my $self = shift;
@@ -178,6 +221,7 @@ sub ACTION_create_objects {
     my $cbuilder = $self->cbuilder;
 
     my $extra_compiler_flags = $self->notes('CFLAGS');
+    $Config{ccflags} =~ /(-arch \S+(?: -arch \S+)*)/ and $extra_compiler_flags .= " $1";
 
     for my $file (@SOURCES) {
         my $object = $file;
@@ -249,6 +293,7 @@ sub ACTION_create_library {
     if (!$self->up_to_date($o_files, $libfile)) {
         $libbuilder->link(module_name => 'libcld',
                           extra_linker_flags => $extralinkerflags,
+                          'C++' => 1,
                           objects => $o_files,
                           lib_file => $libfile,
                          );

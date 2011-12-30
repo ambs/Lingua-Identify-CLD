@@ -2,3 +2,6 @@ _build
 Build
 MYMETA.*
 *.bak
+blib/
+CLD.cc
+CLD.o
