@@ -1,5 +1,8 @@
 Revision history for Lingua-Identify-CLD
 
+0.01_02 Sat Dec 31 13:16:32 WET 2011
+        - fixed installation procedure (hopefully)
+
 0.01_01 Fri Dec 30 19:59:36 WET 2011
         - stupidiest interface possible to Compact Language Detection library
 
