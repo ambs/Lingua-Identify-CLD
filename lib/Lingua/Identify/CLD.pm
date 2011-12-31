@@ -11,30 +11,50 @@ Lingua::Identify::CLD - Interface to Chrome language detection library.
 
 =head1 VERSION
 
-Version 0.01_02
+Version 0.01
 
 =cut
 
-our $VERSION = '0.01_02';
+our $VERSION = '0.01';
 
-require XSLoader;
-XSLoader::load('Lingua::Identify::CLD', $VERSION);
+use XSLoader;
+BEGIN {
+    XSLoader::load('Lingua::Identify::CLD', $VERSION);
+}
 
 =head1 SYNOPSIS
 
     use Lingua::Identify::CLD;
 
-    // NOTE: THIS INTERFACE IS TEMPORARY, FOR TESTING PURPOSES
+    my $cld = Lingua::Identify::CLD->new();
 
-    my $lang = Lingua::Identify::CLD::identify("Text");
+    my $lang = $cld->identify("Text");
 
-=head1 SUBROUTINES
+=head1 METHODS
+
+=head2 new
+
+Constructs a CLD object.
+
+=cut
+
+sub new {
+    my ($class, %options) = @_;
+    my $self = {%options};
+    return bless $self => $class # amen
+}
 
 =head2 identify
 
 Receives a string, returns a language name.
 
 =cut
+
+sub identify {
+    my ($self, $text, %options) = @_;
+
+    return _identify($text);
+}
 
 =head1 AUTHOR
 

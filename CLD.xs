@@ -25,7 +25,7 @@ extern "C" {
 MODULE = Lingua::Identify::CLD		PACKAGE = Lingua::Identify::CLD
 
 const char*
-identify(src)
+_identify(src)
    const char* src
   CODE:
     int src_length = strlen(src);

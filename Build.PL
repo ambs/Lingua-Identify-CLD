@@ -25,6 +25,7 @@ my $builder = MyBuilder->new
                            'ExtUtils::LibBuilder' => '0.04',
                           },
    requires            => {
+                           'XSLoader' => '0.10',
                            'perl' => 5.008,
                           },
    add_to_cleanup      => [
