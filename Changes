@@ -1,7 +1,10 @@
 Revision history for Lingua-Identify-CLD
 
+0.02_02 Sun Jan  1 15:24:34 WET 2012
+        - patched testing procedure to handle Solaris
+
 0.02_01 Sun Jan  1 13:48:20 WET 2012
-        - patched cld code to handle (?) NetBSD
+        - patched cld code to handle Net-BSD
 
 0.01    Sat Dec 31 14:05:00 WET 2011
         - added a cleaner interface (still simple, but ready to grow)
