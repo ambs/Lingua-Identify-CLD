@@ -127,6 +127,9 @@ sub ACTION_compile_xscode {
         utime( (time) x 2, $bs_file );    # touch
     }
 
+    my $extra_linker_flags = "-Lcld-src -lcld -lstdc++";
+    $extra_linker_flags .= " -lgcc_s" if $^O eq 'netbsd';
+
     my $objects = [ $ofile ];
     # .o => .(a|bundle)
     my $lib_file = catfile( $archdir, "CLD.$Config{dlext}" );
@@ -134,7 +137,7 @@ sub ACTION_compile_xscode {
         my $btparselibdir = $self->install_path('usrlib');
         $cbuilder->link(
                         module_name => 'Lingua::Identify::CLD',
-                        extra_linker_flags => "-Lcld-src -lcld -lstdc++",
+                        extra_linker_flags => $extra_linker_flags,
                         objects     => $objects,
                         lib_file    => $lib_file,
                        );

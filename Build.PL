@@ -16,6 +16,7 @@ my $builder = MyBuilder->new
    build_requires      => {
                            'Config::AutoConf'     => '0.16',
                            'ExtUtils::CBuilder'   => '0.27',
+                           'ExtUtils::ParseXS'    => 0,
                            'ExtUtils::LibBuilder' => '0.04',
                            'Test::More'           => 0,
                           },
