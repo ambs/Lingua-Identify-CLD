@@ -1,5 +1,8 @@
 Revision history for Lingua-Identify-CLD
 
+0.02_04 Wed Jan  4 21:31:01 WET 2012
+        - trying my luck with PPC darwin
+
 0.02_03 Mon Jan  2 18:18:27 WET 2012
         - trying my luck for NetBSD (again).
           Probably good idea to depend on ExtUtils::CppGuess
