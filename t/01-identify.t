@@ -46,5 +46,8 @@ plan tests => scalar(keys %langs);
 
 my $cld = Lingua::Identify::CLD->new();
 for my $lang (keys %langs) {
-    is ($cld->identify($langs{$lang}), $lang, "Identifying $lang");
+    is $cld->identify($langs{$lang}), $lang, "Identifying $lang";
 }
+
+# my $cld_tld = Lingua::Identify::CLD->new(tld => 'pt');
+# is $cld_tld->identify("Amo-te."), 'PORTUGUESE', "Spanish @ .pt";

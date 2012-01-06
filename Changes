@@ -1,5 +1,12 @@
 Revision history for Lingua-Identify-CLD
 
+0.02_06 Fri Jan  6 22:20:38 WET 2012
+        - fixed DragonFly BSD support.
+
+0.02_05 Fri Jan  6 21:30:38 WET 2012
+        - trying my luck with DragonFly BSD.
+        - adding tld hint support, first step.
+
 0.02_04 Wed Jan  4 21:31:01 WET 2012
         - trying my luck with PPC darwin
 

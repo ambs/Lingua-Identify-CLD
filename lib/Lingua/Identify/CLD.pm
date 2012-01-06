@@ -11,11 +11,11 @@ Lingua::Identify::CLD - Interface to Chrome language detection library.
 
 =head1 VERSION
 
-Version 0.02_04
+Version 0.02_06
 
 =cut
 
-our $VERSION = '0.02_04';
+our $VERSION = '0.02_06';
 
 use XSLoader;
 BEGIN {
@@ -34,7 +34,16 @@ BEGIN {
 
 =head2 new
 
-Constructs a CLD object.
+Constructs a CLD object. You can pass some global configuration
+options. Currently supported options are listed bellow:
+
+=over 4
+
+=item tld
+
+A top level domain (tld) to help on the language identification.
+
+=back
 
 =cut
 
@@ -53,7 +62,8 @@ Receives a string, returns a language name.
 sub identify {
     my ($self, $text, %options) = @_;
 
-    return _identify($text);
+    my $tld = exists($self->{tld}) ? $self->{tld} : "";
+    return _identify($text, $tld);
 }
 
 =head1 AUTHOR
