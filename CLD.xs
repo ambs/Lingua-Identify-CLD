@@ -29,7 +29,7 @@ _identify(src, tld_hint)
    const char* src
    const char* tld_hint
   CODE:
-    int src_length = strlen(src);
+    int src_length;
     bool is_plain_text = true; /* make this an option */
     bool allow_extended_languages = true;
     bool pick_summary_language = false;
@@ -44,9 +44,11 @@ _identify(src, tld_hint)
     int text_bytes;
     bool is_reliable;
    
-   if (!strlen(tld_hint)) tld_hint = NULL;
+    src_length = strlen(src);
+    if (!strlen(tld_hint))
+        tld_hint = NULL;
 
-   if (0) {
+    if (1) {
        fprintf(stderr, "Text is >%s<\n", src);
        fprintf(stderr, "Text length is >%d<\n", src_length);
        fprintf(stderr, "is_plain_text is >%d<\n", is_plain_text);
@@ -59,30 +61,27 @@ _identify(src, tld_hint)
            fprintf(stderr, "tld_hint is >%s<\n", tld_hint);
        fprintf(stderr, "encoding_hint is >%d<\n", encoding_hint);
        fprintf(stderr, "language_hint is >%d<\n", language_hint);
-   }
+       fprintf(stderr, "\n\n\n");
+    }
 
-   Language l = CompactLangDet::DetectLanguage(0,
-                                               src,
-                                               src_length,
-                                               is_plain_text,
-                                               allow_extended_languages,
-                                               pick_summary_language,
-                                               remove_weak_matches,
-                                               tld_hint,
-                                               encoding_hint,
-                                               language_hint,
-                                               language3,
-                                               percent3,
-                                               normalized_score3,
-                                               &text_bytes,
-                                               &is_reliable);
-   if (0) {
-    fprintf(stderr, "identified as >%d<\n", l);
-    fprintf(stderr, "\n\n\n");
-   }
-  RETVAL = LanguageName(l);
+    Language l = CompactLangDet::DetectLanguage(0,
+                                                src,
+                                                src_length,
+                                                is_plain_text,
+                                                allow_extended_languages,
+                                                pick_summary_language,
+                                                remove_weak_matches,
+                                                tld_hint,
+                                                encoding_hint,
+                                                language_hint,
+                                                language3,
+                                                percent3,
+                                                normalized_score3,
+                                                &text_bytes,
+                                                &is_reliable);
+    RETVAL = LanguageName(l);
   OUTPUT:
-     RETVAL
+    RETVAL
 
 
 

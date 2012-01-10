@@ -1,6 +1,6 @@
 package Lingua::Identify::CLD;
 
-use 5.006;
+use 5.008;
 use strict;
 use warnings;
 
@@ -11,11 +11,11 @@ Lingua::Identify::CLD - Interface to Chrome language detection library.
 
 =head1 VERSION
 
-Version 0.02_06
+Version 0.02_07
 
 =cut
 
-our $VERSION = '0.02_06';
+our $VERSION = '0.02_07';
 
 use XSLoader;
 BEGIN {
@@ -63,7 +63,11 @@ sub identify {
     my ($self, $text, %options) = @_;
 
     my $tld = exists($self->{tld}) ? $self->{tld} : "";
-    return _identify($text, $tld);
+    my $lang = _identify($text, $tld);
+    if ($lang ne uc($lang)) {
+        warn "**** Obtained $lang...";
+    }
+    return uc $lang;
 }
 
 =head1 AUTHOR

@@ -1,5 +1,9 @@
 Revision history for Lingua-Identify-CLD
 
+0.02_07 Tue Jan 10 17:07:07 WET 2012    
+        - Added debuging info output.
+        - Added more language tests.
+
 0.02_06 Fri Jan  6 22:20:38 WET 2012
         - fixed DragonFly BSD support.
 
