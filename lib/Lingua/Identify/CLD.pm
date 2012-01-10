@@ -26,9 +26,15 @@ BEGIN {
 
     use Lingua::Identify::CLD;
 
+    # Vanilla identification
     my $cld = Lingua::Identify::CLD->new();
-
     my $lang = $cld->identify("Text");
+
+    # using TLD hint
+    my $lang = $cld->identify("Text", tld => 'by');
+
+    # CLD object can also be created with this option
+    my $bycld = Lingua::Identify::CLD->new(tld => 'by');
 
 =head1 METHODS
 
@@ -43,6 +49,11 @@ options. Currently supported options are listed bellow:
 
 A top level domain (tld) to help on the language identification.
 
+=item isPlainText
+
+By default is set to true. If you have some HTML/XML markup, set it to
+false.
+
 =back
 
 =cut
@@ -55,18 +66,27 @@ sub new {
 
 =head2 identify
 
-Receives a string, returns a language name.
+Receives a string, returns a language name. Following the text a set
+of key/value options may be supplied. The supported options are the
+same as of C<new>.
 
 =cut
 
 sub identify {
     my ($self, $text, %options) = @_;
 
-    my $tld = exists($self->{tld}) ? $self->{tld} : "";
-    my $lang = _identify($text, $tld);
+    my %cfg = ( %$self, %options );
+
+    my $tld       = exists($cfg{tld})         ? $cfg{tld}         : "";
+    my $plaintext = exists($cfg{isPlainText}) ? $cfg{isPlainText} : 1;
+
+    my $lang = _identify($text, $tld, $plaintext);
+
+    # debug
     if ($lang ne uc($lang)) {
         warn "**** Obtained $lang...";
     }
+
     return uc $lang;
 }
 

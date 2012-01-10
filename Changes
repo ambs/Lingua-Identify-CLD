@@ -1,5 +1,8 @@
 Revision history for Lingua-Identify-CLD
 
+        - Support options in the 'identify' method
+        - Added support to isPlainText
+
 0.02_07 Tue Jan 10 17:07:07 WET 2012    
         - Added debuging info output.
         - Added more language tests.
