@@ -82,11 +82,6 @@ sub identify {
 
     my $lang = _identify($text, $tld, $plaintext);
 
-    # debug
-    if ($lang ne uc($lang)) {
-        warn "**** Obtained $lang...";
-    }
-
     return uc $lang;
 }
 
