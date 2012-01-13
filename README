@@ -11,6 +11,10 @@ library check
 Note that you will require a C compiler to build the library and the bindings.
 
 
+ARCHITECTURE SUPPORT
+ - currently this module is not building correctly on PPC.
+
+
 INSTALLATION
 
 To install this module, run the following commands:

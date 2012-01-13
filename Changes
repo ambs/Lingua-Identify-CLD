@@ -1,5 +1,6 @@
 Revision history for Lingua-Identify-CLD
 
+0.02    Fri Jan 13 14:42:30 WET 2012
         - Support options in the 'identify' method
         - Added support to isPlainText
 
