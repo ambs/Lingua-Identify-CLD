@@ -49,7 +49,7 @@ _identify(src, tld_hint, plain)
     if (!strlen(tld_hint))
         tld_hint = NULL;
 
-    if (1) {
+    if (0) {
        fprintf(stderr, "Text is >%s<\n", src);
        fprintf(stderr, "Text length is >%d<\n", src_length);
        fprintf(stderr, "is_plain_text is >%d<\n", is_plain_text);
