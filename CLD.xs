@@ -25,14 +25,15 @@ extern "C" {
 MODULE = Lingua::Identify::CLD		PACKAGE = Lingua::Identify::CLD
 
 const char*
-_identify(src, tld_hint, plain)
+_identify(src, tld_hint, plain, extended)
    const char* src
    const char* tld_hint
    int plain
+   int extended
   CODE:
     int src_length;
     bool is_plain_text = plain ? true : false;
-    bool allow_extended_languages = true;
+    bool allow_extended_languages = extended ? true : false;
     bool pick_summary_language = false;
     bool remove_weak_matches = false;
     int encoding_hint = UNKNOWN_ENCODING;

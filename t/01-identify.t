@@ -63,7 +63,7 @@ my %langs = (
             );
 
 my %extra = (
-
+#             PIGLATIN => q{c0NFI5c@7i0N 0F g0od5 i$ a5signed @5 7he P3N@l7Y P@r7 m057 of th3 c0UR75 C0n$I57 0f M3M83R5 @ND wheN I7 i$ n3C35$@ry 70 8rinG pU8Lic Ca53$ 83f0r3 @ JUry 0F m3m83r5 7W0 c0Ur7$ c0M8in3 F0r th3 PuRpo$e 7h3 M0$7 imp0rt@n7 Ca$35 of @LL @R3 8R0Ugh7 Jur0r$ 0r},
             );
 
 plan tests => scalar(keys %langs) + 2 * scalar(keys %extra);
@@ -74,8 +74,6 @@ for my $lang (keys %langs) {
 }
 
 for my $lang (keys %extra) {
-    is $cld->identify($extra{$lang}[1]), $lang, "Identifying $lang";
-
-    my $cld_tld = Lingua::Identify::CLD->new(tld=>$extra{$lang}[0]);
-    is $cld_tld->identify($extra{$lang}[1]), $lang, "Identifying $lang";
+    is $cld->identify($extra{$lang}, allowExtendedLanguages => 1), $lang, "Identifying $lang";
+    is $cld->identify($extra{$lang}, allowExtendedLanguages => 0), $lang, "Identifying $lang";
 }

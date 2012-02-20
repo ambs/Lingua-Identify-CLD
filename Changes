@@ -1,5 +1,8 @@
 Revision history for Lingua-Identify-CLD
 
+0.03    Mon Feb 20 21:07:46 WET 2012
+        - Release as stable
+
 0.03_01 Sat Jan 14 16:32:06 WET 2012
         - Support Debian GNU/kFreeBSD.    
 

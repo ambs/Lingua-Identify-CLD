@@ -11,11 +11,11 @@ Lingua::Identify::CLD - Interface to Chrome language detection library.
 
 =head1 VERSION
 
-Version 0.03_01
+Version 0.03
 
 =cut
 
-our $VERSION = '0.03_01';
+our $VERSION = '0.03';
 
 use XSLoader;
 BEGIN {
@@ -54,6 +54,11 @@ A top level domain (tld) to help on the language identification.
 By default is set to true. If you have some HTML/XML markup, set it to
 false.
 
+=item allowExtendedLanguages
+
+Set to true by default, let you control weather extended languages
+should be checked. Like Klingon or Pig Latin.
+
 =back
 
 =cut
@@ -79,8 +84,9 @@ sub identify {
 
     my $tld       = exists($cfg{tld})         ? $cfg{tld}         : "";
     my $plaintext = exists($cfg{isPlainText}) ? $cfg{isPlainText} : 1;
+    my $extended  = exists($cfg{allowExtendedLanguages}) ? $cfg{allowExtendedLanguages} : 1;
 
-    my $lang = _identify($text, $tld, $plaintext);
+    my $lang = _identify($text, $tld, $plaintext, $extended);
 
     return uc $lang;
 }
