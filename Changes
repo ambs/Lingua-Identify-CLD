@@ -1,5 +1,8 @@
 Revision history for Lingua-Identify-CLD
 
+0.04    Fri Jun  8 22:18:52 WEST 2012
+        - Fix POD encoding and POD tests.
+
 0.03    Mon Feb 20 21:07:46 WET 2012
         - Release as stable
 

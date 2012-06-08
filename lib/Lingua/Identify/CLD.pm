@@ -4,6 +4,7 @@ use 5.008;
 use strict;
 use warnings;
 
+=encoding UTF-8
 
 =head1 NAME
 
@@ -11,11 +12,11 @@ Lingua::Identify::CLD - Interface to Chrome language detection library.
 
 =head1 VERSION
 
-Version 0.03
+Version 0.04
 
 =cut
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 use XSLoader;
 BEGIN {
