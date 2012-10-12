@@ -25,11 +25,13 @@ extern "C" {
 MODULE = Lingua::Identify::CLD		PACKAGE = Lingua::Identify::CLD
 
 const char*
-_identify(src, tld_hint, plain, extended)
+_identify(src, tld_hint, plain, extended, id, percent)
    const char* src
    const char* tld_hint
    int plain
    int extended
+   const char* id
+   int percent
   CODE:
     int src_length;
     bool is_plain_text = plain ? true : false;
@@ -81,9 +83,14 @@ _identify(src, tld_hint, plain, extended)
                                                 normalized_score3,
                                                 &text_bytes,
                                                 &is_reliable);
+
+    id = LanguageCodeWithDialects(l);
+    percent = percent3[0];
+
     RETVAL = LanguageName(l);
   OUTPUT:
     RETVAL
-
+    id
+    percent
 
 

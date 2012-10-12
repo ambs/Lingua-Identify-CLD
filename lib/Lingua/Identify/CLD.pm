@@ -12,11 +12,11 @@ Lingua::Identify::CLD - Interface to Chrome language detection library.
 
 =head1 VERSION
 
-Version 0.04
+Version 0.05
 
 =cut
 
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 
 use XSLoader;
 BEGIN {
@@ -87,9 +87,12 @@ sub identify {
     my $plaintext = exists($cfg{isPlainText}) ? $cfg{isPlainText} : 1;
     my $extended  = exists($cfg{allowExtendedLanguages}) ? $cfg{allowExtendedLanguages} : 1;
 
-    my $lang = _identify($text, $tld, $plaintext, $extended);
+    my $confidence = 0;
+    my $id = '';
 
-    return uc $lang;
+    my $lang = _identify($text, $tld, $plaintext, $extended, $id, $confidence);
+
+    return wantarray ? (uc $lang, $id, $confidence) : uc $lang;
 }
 
 =head1 AUTHOR

@@ -1,5 +1,9 @@
 Revision history for Lingua-Identify-CLD
 
+0.05    Fri Oct 12 17:47:43 WEST 2012
+        - added language-id and confidence output when in array context
+          (thanks to Joerg Tiedemann)
+
 0.04    Fri Jun  8 22:18:52 WEST 2012
         - Fix POD encoding and POD tests.
 
