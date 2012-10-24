@@ -202,13 +202,14 @@ sub ACTION_test {
 
     if ($^O =~ /mswin32/i) {
         $ENV{PATH} = catdir($self->blib,"usrlib").";$ENV{PATH}";
-    } elsif ($^O =~ /darwin/i) {
+    }
+    elsif ($^O =~ /darwin/i) {
         $ENV{DYLD_LIBRARY_PATH} = catdir($self->blib,"usrlib");
     }
     elsif ($^O =~ /(?:linux|bsd|sun|sol|dragonfly|hpux|irix)/i) {
         my $oldlibpath = $ENV{LD_LIBRARY_PATH} || '/lib:/usr/lib';
         $ENV{LD_LIBRARY_PATH} = catdir($self->blib,"usrlib").":$oldlibpath";
-     }
+    }
     elsif ($^O =~ /aix/i) {
         my $oldlibpath = $ENV{LIBPATH} || '/lib:/usr/lib';
         $ENV{LIBPATH} = catdir($self->blib,"usrlib").":$oldlibpath";
