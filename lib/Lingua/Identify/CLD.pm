@@ -88,11 +88,12 @@ sub identify {
     my $extended  = exists($cfg{allowExtendedLanguages}) ? $cfg{allowExtendedLanguages} : 1;
 
     my $confidence = 0;
+    my $is_reliable = 0;
     my $id = '';
 
-    my $lang = _identify($text, $tld, $plaintext, $extended, $id, $confidence);
+    my $lang = _identify($text, $tld, $plaintext, $extended, $id, $confidence, $is_reliable);
 
-    return wantarray ? (uc $lang, $id, $confidence) : uc $lang;
+    return wantarray ? (uc $lang, $id, $confidence, $is_reliable) : uc $lang;
 }
 
 =head1 AUTHOR
