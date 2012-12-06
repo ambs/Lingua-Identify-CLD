@@ -1,5 +1,8 @@
 Revision history for Lingua-Identify-CLD
 
+0.06    Thu Dec  6 11:59:37 WET 2012
+        - added is_reliable (thanks to Caine Tighe)
+
 0.05    Fri Oct 12 17:47:43 WEST 2012
         - added language-id and confidence output when in array context
           (thanks to Joerg Tiedemann)

@@ -12,11 +12,11 @@ Lingua::Identify::CLD - Interface to Chrome language detection library.
 
 =head1 VERSION
 
-Version 0.05
+Version 0.06
 
 =cut
 
-our $VERSION = '0.05';
+our $VERSION = '0.06';
 
 use XSLoader;
 BEGIN {
@@ -33,6 +33,13 @@ BEGIN {
 
     # using TLD hint
     my $lang = $cld->identify("Text", tld => 'by');
+
+    # obtaining further information
+    my @lang = $cld->identify("Text");
+    # $lang[0] -> language name
+    # $lang[1] -> language id
+    # $lang[2] -> confidence
+    # $lang[3] -> is_reliable (bool)
 
     # CLD object can also be created with this option
     my $bycld = Lingua::Identify::CLD->new(tld => 'by');
