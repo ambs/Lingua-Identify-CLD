@@ -43,26 +43,4 @@ my $builder = MyBuilder->new
   );
 
 
-## HACK  HACK  HACK  HACK
-my $libdir = $builder->install_destination("bin");
-if ($^O =~ /mswin32/i) {
-    $libdir = $ENV{WINDIR} || 'c:\\WINDOWS\\'; ## HACK HACK HACK
-} else {
-    if ($Config{archname} =~ /^x86_64/) {
-        $libdir =~ s/\bbin\b/lib64/;
-        if (!-d $libdir) {
-            my $test = $libdir;
-            $test =~ s/lib64/lib/;
-            $libdir = $test if -d $test;
-        }
-    } else {
-        $libdir =~ s/\bbin\b/lib/;
-    }
-}
-$builder->notes('libdir'   => $libdir);
-$builder->notes('lib_path' => $libdir);
-
-$builder->add_build_element('usrlib');
-$builder->install_path( 'usrlib' => $libdir );
-
 $builder->create_build_script;

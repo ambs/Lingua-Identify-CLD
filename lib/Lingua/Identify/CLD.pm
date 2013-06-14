@@ -150,6 +150,9 @@ Chrome team for making the code available.
 
 Jean Véronis for pushing me to do this.
 
+SocialFlow L<http://www.socialflow.com> for simplifiying the
+build/install process.
+
 =head1 LICENSE AND COPYRIGHT
 
 Copyright 2011 Alberto Simoes.
