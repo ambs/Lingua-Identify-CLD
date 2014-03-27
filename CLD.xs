@@ -17,6 +17,13 @@ extern "C" {
 
 #include "ppport.h"
 
+// Hack to work around "error: declaration of 'Perl___notused' has a different
+// language linkage" error on Clang
+#ifdef dNOOP
+# undef dNOOP
+# define dNOOP
+#endif
+
 #include "encodings/compact_lang_det/compact_lang_det.h"
 #include "encodings/compact_lang_det/ext_lang_enc.h"
 #include "encodings/compact_lang_det/unittest_data.h"

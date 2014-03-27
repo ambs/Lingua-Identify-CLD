@@ -1,0 +1,53 @@
+{
+   "abstract" : "Interface to Chrome language detection library.",
+   "author" : [
+      "Alberto SimÃµes <ambs@cpan.org>"
+   ],
+   "dynamic_config" : 1,
+   "generated_by" : "Module::Build version 0.4005, CPAN::Meta::Converter version 2.131560",
+   "license" : [
+      "bsd"
+   ],
+   "meta-spec" : {
+      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+      "version" : "2"
+   },
+   "name" : "Lingua-Identify-CLD",
+   "prereqs" : {
+      "build" : {
+         "requires" : {
+            "Config::AutoConf" : "0.17",
+            "ExtUtils::CBuilder" : "0.27",
+            "ExtUtils::LibBuilder" : "0.04",
+            "ExtUtils::ParseXS" : "0",
+            "Test::More" : "0"
+         }
+      },
+      "configure" : {
+         "requires" : {
+            "Config::AutoConf" : "0.16",
+            "ExtUtils::LibBuilder" : "0.04",
+            "Module::Build" : "0.38"
+         }
+      },
+      "runtime" : {
+         "requires" : {
+            "XSLoader" : "0.10",
+            "perl" : "5.008"
+         }
+      }
+   },
+   "provides" : {
+      "Lingua::Identify::CLD" : {
+         "file" : "lib/Lingua/Identify/CLD.pm",
+         "version" : "0.07"
+      }
+   },
+   "release_status" : "stable",
+   "resources" : {
+      "license" : [
+         "http://opensource.org/licenses/bsd-license.php"
+      ]
+   },
+   "version" : "0.07"
+}
