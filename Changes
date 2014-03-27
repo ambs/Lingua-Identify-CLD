@@ -1,5 +1,7 @@
 Revision history for Lingua-Identify-CLD
 
+		- Fix issue when compiling with Clang (Thanks to Linas Valiukas)
+
 0.07    Fri Jun 14 21:20:21 WEST 2013
         - Get rid of standalone library, prepare just the Perl library
           itself. (Thanks to Ash Berlin @ SocialFlow)
