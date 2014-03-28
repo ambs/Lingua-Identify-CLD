@@ -1,5 +1,6 @@
 Revision history for Lingua-Identify-CLD
 
+0.08	Fri Mar 28 17:06:17 WET 2014
 		- Fix issue when compiling with Clang (Thanks to Linas Valiukas)
 
 0.07    Fri Jun 14 21:20:21 WEST 2013
