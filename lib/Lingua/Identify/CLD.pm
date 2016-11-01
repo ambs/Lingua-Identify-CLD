@@ -12,11 +12,11 @@ Lingua::Identify::CLD - Interface to Chrome language detection library.
 
 =head1 VERSION
 
-Version 0.09
+Version 0.10
 
 =cut
 
-our $VERSION = '0.09';
+our $VERSION = '0.10';
 
 use XSLoader;
 BEGIN {

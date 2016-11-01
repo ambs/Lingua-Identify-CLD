@@ -1,5 +1,8 @@
 Revision history for Lingua-Identify-CLD
 
+0.10    Tue Nov  1 16:50:11 WET 2016
+		- Fix data file to compile with latest gcc (Thanks to JJOAO)
+
 0.09    Sun Sep  7 21:39:42 WEST 2014
         - Added identify-cld binary
 
